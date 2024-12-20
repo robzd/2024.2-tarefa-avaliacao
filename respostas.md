@@ -178,7 +178,17 @@ pela conclusão de processos longos, fazendo com que haja atraso em processos ma
 Round Robin (RR): Todos os processos recebem o mesmo tempo de execução, o que é benéfico para sistemas onde o tempo de
 resposta é crucial, mas isso pode acabar sobrecarregando o processador, fazendo com que processos sejam frequentemente
 interrompidos ou alternados. Isso acaba sendo um problema em sistemas que possuem processos com tempos de execução
-desiguais.
+desiguais.  
+Esses dois tipos de algoritmos são consideravelmente baratos no quesito de custo de processamento, porque neles não há
+cálculos muito complexos. Porém, eles podem não ser os ideais para a melhor execução por parte do processador ou por 
+questões de otimização de tempo em certos cenários, o que justificaria a escolha de algoritmos mais caros, porém mais
+sofisticados, como por exemplo o SJN ou o Priority Scheduling, que consegue determinar qual processo deve ser executado
+em sequência, principalmente quando a previsão de tempo requerido ou gestão de prioridades necessitam de operações extas.  
+Em situações de sistemas em tempo real, por exemplo, o Priority Scheduling é geralmente o escolhido porque nesses casos a 
+prioridade e o tempo de resposta são requisitos críticos. Entretanto, em servidores web, onde o objetivo é a garantia de 
+tempos de resposta rápidos para uma grande carga de solicitações, o Round Robbin (RR) pode ser uma escolha melhor, porque
+ele oferece uma distribuição de tempo sem a necessidade priorização de processos. Sendo assim, a escolha do algoritmo de
+escalonamento depende do sistema referido, ou seja, das necessidades dele, do custo de processamento, etc.
 
 # Questão 5. Aplicativo em python vs aplicativos em c
 
@@ -190,6 +200,9 @@ Explique o caminho que as instruções seguem desde um aplicativo escrito em Pyt
 - A interação entre o kernel do sistema operacional e os drivers de dispositivo
 - A tradução final das instruções para o formato binário (0 e 1) executado pelo hardware
 
-**Dica:** Compare e contraste os dois processos, destacando as principais diferenças e semelhanças na forma como as instruções são processadas e executadas.
-
-**Copilot informa**: Essa questão incentiva os alunos a refletirem sobre os diferentes caminhos que as instruções seguem em linguagens interpretadas e compiladas, aplicando conceitos teóricos a contextos práticos.
+## Resposta:
+Python: por ser uma linguagem interpretada, o interpretador primeiramente lê o código-fonte do arquivo .py, depois o código
+é compilado em bytecode, não sendo diretamente executado pelo processador, mas podendo ser interpretada pela PVM, que é a
+máquina virtual od Python. Dessa forma, o código não é traduzido diretamente para o código de máquina do processador. Depois, o kernel do sistema operacional e os drivers dos dispositivos gerenciam as interações, fazendo a comunicação entre o código em questão e o hardware, podendo usar os drivers para acesso de disco rígido ou placa de vídeo, por exemplo. No caso, o interpretador pode precisar interagir com o SO através de chamadas de sistema para a realização de tarefas como abrir arquivos ou se comunicar com a rede. Por fim, a tradução final das instruções ocorre antes da execução pelo processador, aqui no caso o interpretador traduz o código para bytecode e este código é interpretado pela PVM. Sendo sasim, o código final é produzido dinamicamente durante a execução do programa.  
+C: por ser uma linguagem compilada, o código-fonte do tipo .c é passado para um compilador, por exemplo o gcc, e depois é convertido para código de máquina específico do SO ou do tipo de processador onde o programa será executado. Depois disso, o compilador gera um arquivo do tipo .o que contém o código de máquina, esse arquivo é linkado com possíveis bilbiotecas ou dependências necessárias e acaba virando um arquivo executável. Por fim, o  SO carrega o binário na memória e o processador executa o arquivo diretamente, interpretando as instruções do código de máquina. O kernel do SO e os drivers funcionam de forma semelhante com o Python, diferentemente de que em C, as interações são feitas diretamente através de chamadas de sistema ou APIs. Por fim, a tradução final ocorre quando o arquivo binário contendo o código de máquina é carregado na memória e executado pelo processador.  
+Comparando as duas linguagens, percebe-se que o código C é mais rápido de se executar que o código Python, por não precisar de uma camada adicional de interpretação, que no caso seria a PVM. Entretanto, o código Python tende a ser mais flexível e interativo, por não necessitar de compilação, isso faz com que testes e desenvolvimento dinâmico sejam mais possibilitados.
